@@ -1,16 +1,12 @@
 <template>
     <div class="navbar-wrapper">
         <el-container>
-            <div class="user">
+            <div class="user" @click="toggleLoginDialog = true">
                 <div class="avatar">
-                    <el-avatar :size="35" src="https://empty" @error="isFetchAvatarFailed">
-                        <img
-                                src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
-                                alt="avatar"/>
-                    </el-avatar>
+                    <el-avatar :size="30" :src="fetchAvatar()"></el-avatar>
                 </div>
                 <div class="username">
-                    <span>Name...</span>
+                    <span>{{ getUsername() }}</span>
                 </div>
             </div>
             <div class="content">
@@ -28,11 +24,37 @@
 </template>
 
 <script lang="ts" setup>
-import {Moon, Sunny} from '@element-plus/icons-vue'
-import {useDark} from '@vueuse/core'
+import { ref } from 'vue'
+import type { Ref } from 'vue'
+import { Moon, Sunny } from '@element-plus/icons-vue'
+import { useDark } from '@vueuse/core'
+import { useUserStore } from "~/stores/UserInfo";
+import { storeToRefs } from 'pinia'
 
+const userStore = useUserStore()
+const { toggleLoginDialog, currentProfile } = storeToRefs(userStore)
+const userProfile = userStore.userProfile
 const isSwitched = useDark()
-const isFetchAvatarFailed = (): boolean => true
+const getUsername = (): string => {
+    // do some ajax
+    return currentProfile.value
+}
+const fetchAvatar = (): string => {
+    // do some ajax
+    let avatar: Ref<string | null> = ref("")
+    for (let i=0; i<userProfile.length; i++) {
+        if (userProfile[i].name == currentProfile.value) {
+            if (userProfile[i].avatar != null) {
+                avatar.value = userProfile[i].avatar
+            }
+        }
+    }
+    if (avatar.value == "") {
+        return "https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
+    } else {
+        return avatar.value as string
+    }
+}
 </script>
 
 <style scoped>
@@ -53,6 +75,8 @@ const isFetchAvatarFailed = (): boolean => true
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
+    height: 100%;
+    width: 100%;
 }
 
 .user {
@@ -65,7 +89,7 @@ const isFetchAvatarFailed = (): boolean => true
 }
 
 .user:hover {
-    background-color: #fff;
+    cursor: pointer;
 }
 
 .avatar {

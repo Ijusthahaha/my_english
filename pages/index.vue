@@ -1,5 +1,6 @@
 <template>
     <div class="common-layout">
+        <LoginDialog></LoginDialog>
         <el-container>
             <el-header class="navbar">
                 <header-navigator></header-navigator>
@@ -17,9 +18,9 @@
 </template>
 
 <script lang="ts" setup>
-
 import MainView from "~/components/MainView.vue";
 import HeaderNavigator from "~/components/HeaderNavigator.vue";
+import LoginDialog from "~/components/LoginDialog.vue";
 </script>
 
 <style scoped>

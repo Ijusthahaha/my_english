@@ -1,27 +1,51 @@
 import { defineStore } from "pinia";
+import { useLocalStorage } from '@vueuse/core';
 
 export const useGKStore = defineStore('GKSets', () => {
+    const currentGKSet = useLocalStorage("currentGKSet", 0)
+    const updateCurrentGKSet = (i: number) => {
+        currentGKSet.value = i
+    }
+
+    // 每个Profile有每个不同的GKSets
     const GKSets = [
         {id: "1", name: "GK Paragraph 1", children: [
-                {
-                    id: "1",
-                    name: "hello",
-                    eng_definition: null,
-                    chn_definition: "你好"
-                },
-                {
-                    id: "2",
-                    name: "world",
-                    eng_definition: "the earth, with all its countries, peoples and natural features",
-                    chn_definition: null
-                },
-            ]},
-        {id: "2", name: "GK Paragraph 2"},
+            {
+                id: "1",
+                name: "hello", // not null
+                definition: "123"
+            },
+            {
+                id: "2",
+                name: "world",
+                definition: "456"
+            },
+        ]},
+        {id: "2", name: "GK Paragraph 2", children: [
+            {
+                id: "1",
+                name: "hello", // not null
+                definition: "123"
+            },
+            {
+                id: "2",
+                name: "world",
+                definition: "456"
+            },
+        ]},
         {id: "3", name: "GK Paragraph 3"},
         {id: "4", name: "GK Paragraph 4"},
         {id: "5", name: "GK Paragraph 5"}
     ]
+
+    function updateGKSets() {
+        console.log("updating...")
+    }
+
     return {
-        GKSets
+        GKSets,
+        currentGKSet,
+        updateCurrentGKSet,
+        updateGKSets
     }
 })
