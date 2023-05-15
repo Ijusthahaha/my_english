@@ -16,7 +16,6 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useGKStore } from "~/stores/GKSets"
 import { useUserStore } from "~/stores/UserInfo";

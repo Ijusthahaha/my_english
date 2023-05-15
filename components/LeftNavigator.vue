@@ -13,16 +13,12 @@
                     </el-menu-item>
                 </el-sub-menu>
 
-                <el-sub-menu index="2" v-if="isAdminProfile()">
+                <!-- <el-sub-menu index="2" v-if="isAdminProfile()">
                     <template #title>
                         <el-icon><Setting /></el-icon>Setting
                     </template>
-                    <el-menu-item index="2-1">Option 1</el-menu-item>
-                    <el-menu-item index="2-2">Option 2</el-menu-item>
-                    <el-menu-item index="2-3">Option 3</el-menu-item>
-                    <el-menu-item index="2-4">Option 4</el-menu-item>
-                    <el-menu-item index="2-5">Option 5</el-menu-item>
-                </el-sub-menu>
+                    <NuxtLink to="/settings/profile"><el-menu-item index="2-1">Option 1</el-menu-item></NuxtLink>
+                </el-sub-menu> -->
             </el-menu>
         </el-scrollbar>
     </client-only>
@@ -51,5 +47,8 @@ const isAdminProfile = useUserStore().isAdminProfile
     overflow-y: auto;
     /*transform: translate(100%);*/
     transition: background-color var(--el-transition-duration-fast), opacity .25s, transform .5s cubic-bezier(.19, 1, .22, 1);
+}
+a {
+    text-decoration: none;
 }
 </style>

@@ -7,13 +7,19 @@ export const useGKStore = defineStore('GKSets', () => {
         currentGKSet.value = i
     }
 
+    interface GK {
+        id: string | number,
+        name: string,
+        children: GK[]
+    }
+
     // 每个Profile有每个不同的GKSets
-    const GKSets = [
+    const GKSets: GK[] = [
         {id: "1", name: "GK Paragraph 1", children: [
             {
                 id: "1",
                 name: "hello", // not null
-                definition: "123"
+                definition: "used as a greeting when you meet sb, when you answer the telephone or when you want to attract sb's attention"
             },
             {
                 id: "2",

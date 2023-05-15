@@ -18,6 +18,9 @@
                             v-model="isSwitched"
                     />
                 </div>
+                <div class="setting">
+                    <el-icon><Setting /></el-icon>
+                </div>
             </div>
         </el-container>
     </div>
@@ -26,7 +29,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import type { Ref } from 'vue'
-import { Moon, Sunny } from '@element-plus/icons-vue'
+import { Moon, Sunny, Setting } from '@element-plus/icons-vue'
 import { useDark } from '@vueuse/core'
 import { useUserStore } from "~/stores/UserInfo";
 import { storeToRefs } from 'pinia'
@@ -160,6 +163,12 @@ label:active:after {
 
 input:checked + label {
     background-color: #eee;
+}
+
+.setting {
+    height: 24px;
+    padding: 0 12px;
+    font-size: 18px;
 }
 
 </style>

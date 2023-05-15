@@ -7,10 +7,10 @@
             </el-header>
             <el-container>
                 <el-aside width="210px">
-                    <LeftNavigator></LeftNavigator>
+                    <left-navigator></left-navigator>
                 </el-aside>
                 <el-main>
-                    <MainView></MainView>
+                    <nuxt-page></nuxt-page>
                 </el-main>
             </el-container>
         </el-container>
@@ -18,9 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import MainView from "~/components/MainView.vue";
-import HeaderNavigator from "~/components/HeaderNavigator.vue";
-import LoginDialog from "~/components/LoginDialog.vue";
+
 </script>
 
 <style scoped>
@@ -28,9 +26,11 @@ import LoginDialog from "~/components/LoginDialog.vue";
     height: 100vh;
     width: 100%;
 }
+
 .el-main {
     min-height: 100vh;
 }
+
 .navbar {
     position: sticky;
     top: 0;

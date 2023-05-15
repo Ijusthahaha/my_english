@@ -8,15 +8,13 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
-  "devDependencies": {
-    
-  },
+  "devDependencies": {},
   "dependencies": {
-    "element-plus": "^2.3.4",
     "@element-plus/nuxt": "^1.0.4",
     "@pinia/nuxt": "^0.4.8",
     "@types/node": "^18",
     "@vueuse/nuxt": "^10.0.2",
+    "element-plus": "^2.3.4",
     "nuxt": "^3.4.1",
     "pinia": "^2.0.34"
   }
