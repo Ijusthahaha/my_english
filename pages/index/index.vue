@@ -62,7 +62,7 @@ watch(currentGKSet, (newValue) => {
     for (let i = 0; i < GKSets.length; i++) {
         if (parseInt(GKSets[i].id as string) == newValue + 1) {
             if (GKSets[i].children) {
-                GKSetsChildren.push(...GKSets[i].children)
+                GKSetsChildren.push(...GKSets[i].children!)
             }
         }
     }

@@ -7,14 +7,20 @@ export const useGKStore = defineStore('GKSets', () => {
         currentGKSet.value = i
     }
 
+    interface GKParagraph {
+        id: string | number,
+        name: string,
+        children?: GK[]
+    }
     interface GK {
         id: string | number,
         name: string,
-        definition: string
+        part_of_speech: string,
+        definition: string,
     }
 
     // 每个Profile有每个不同的GKSets
-    const GKSets: GK[] = [
+    const GKSets: GKParagraph[] = [
         {id: "1", name: "GK Paragraph 1", children: [
             {
                 id: "1",

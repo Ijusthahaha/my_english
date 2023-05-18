@@ -3,7 +3,7 @@
         <el-dialog v-model="toggleLoginDialog" title="Login" append-to-body align-center :before-close="onDialogClose">
             <el-form :inline="true" :model="form" class="demo-form-inline">
                 <el-form-item label="Login profile: " prop="profile" required>
-                    <el-select v-model="form.profile" placeholder="Select Profile">
+                    <el-select v-model="form.profile as string" placeholder="Select Profile">
                         <el-option v-for="profile in userProfile" :key="profile.id" :label="profile.name" :value="profile.name" />
                     </el-select>
                 </el-form-item>
@@ -19,6 +19,7 @@
 import { storeToRefs } from 'pinia'
 import { useGKStore } from "~/stores/GKSets"
 import { useUserStore } from "~/stores/UserInfo";
+import {ReactiveVariable} from "vue/macros";
 
 const GKSets = useGKStore()
 const userStore = useUserStore()
@@ -29,7 +30,7 @@ const onDialogClose = (done: () => void) => {
     done()
 }
 
-let form = reactive({
+let form: ReactiveVariable<{ profile: string }> = reactive({
     profile: ''
 })
 const onSubmit = () => {
