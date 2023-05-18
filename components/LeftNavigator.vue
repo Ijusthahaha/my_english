@@ -12,13 +12,6 @@
                         {{ gk.name }}
                     </el-menu-item>
                 </el-sub-menu>
-
-                <!-- <el-sub-menu index="2" v-if="isAdminProfile()">
-                    <template #title>
-                        <el-icon><Setting /></el-icon>Setting
-                    </template>
-                    <NuxtLink to="/settings/profile"><el-menu-item index="2-1">Option 1</el-menu-item></NuxtLink>
-                </el-sub-menu> -->
             </el-menu>
         </el-scrollbar>
     </client-only>
@@ -28,12 +21,15 @@
 import { MessageBox, Setting } from '@element-plus/icons-vue'
 import { useGKStore } from "~/stores/GKSets";
 import { useUserStore } from "~/stores/UserInfo"
+import { ContextMenu, ContextMenuGroup, ContextMenuSeparator, ContextMenuItem } from '@imengyu/vue3-context-menu';
+
 const GKSets = useGKStore().GKSets
 const currentGKSet = useGKStore().currentGKSet
 const updateCurrentGKSet = useGKStore().updateCurrentGKSet
 const userProfile = useUserStore().userProfile
 const currentProfile = useUserStore().currentProfile
 const isAdminProfile = useUserStore().isAdminProfile
+
 </script>
 
 <style scoped>

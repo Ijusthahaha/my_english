@@ -1,7 +1,7 @@
 <template>
     <client-only>
         <el-dialog v-model="toggleLoginDialog" title="Login" append-to-body align-center :before-close="onDialogClose">
-            <el-form :inline="true" :model="form" class="demo-form-inline" :rules="rules">
+            <el-form :inline="true" :model="form" class="demo-form-inline">
                 <el-form-item label="Login profile: " prop="profile" required>
                     <el-select v-model="form.profile" placeholder="Select Profile">
                         <el-option v-for="profile in userProfile" :key="profile.id" :label="profile.name" :value="profile.name" />
@@ -29,15 +29,14 @@ const onDialogClose = (done: () => void) => {
     done()
 }
 
-const rules = {
-    
-}
 let form = reactive({
     profile: ''
 })
 const onSubmit = () => {
   // do some ajax
-  currentProfile.value = form.profile
+  if (form.profile && form.profile != currentProfile.value) {
+    currentProfile.value = form.profile
+  }
   toggleLoginDialog.value = false
 
   // update GKSets

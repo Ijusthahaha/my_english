@@ -10,7 +10,7 @@ export const useGKStore = defineStore('GKSets', () => {
     interface GK {
         id: string | number,
         name: string,
-        children: GK[]
+        definition: string
     }
 
     // 每个Profile有每个不同的GKSets
@@ -19,24 +19,28 @@ export const useGKStore = defineStore('GKSets', () => {
             {
                 id: "1",
                 name: "hello", // not null
-                definition: "used as a greeting when you meet sb, when you answer the telephone or when you want to attract sb's attention"
+                definition: "used as a greeting when you meet sb, when you answer the telephone or when you want to attract sb's attention",
+                part_of_speech: "noun.",
             },
             {
                 id: "2",
                 name: "world",
-                definition: "456"
+                definition: "456",
+                part_of_speech: "noun.",
             },
         ]},
         {id: "2", name: "GK Paragraph 2", children: [
             {
                 id: "1",
                 name: "hello", // not null
-                definition: "123"
+                definition: "123",
+                part_of_speech: "noun.",
             },
             {
                 id: "2",
                 name: "world",
-                definition: "456"
+                definition: "456",
+                part_of_speech: "noun.",
             },
         ]},
         {id: "3", name: "GK Paragraph 3"},

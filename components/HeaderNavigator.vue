@@ -18,7 +18,7 @@
                             v-model="isSwitched"
                     />
                 </div>
-                <div class="setting">
+                <div class="setting" @click="toggleSettingDialog = true" v-if="isAdminProfile()">
                     <el-icon><Setting /></el-icon>
                 </div>
             </div>
@@ -35,8 +35,9 @@ import { useUserStore } from "~/stores/UserInfo";
 import { storeToRefs } from 'pinia'
 
 const userStore = useUserStore()
-const { toggleLoginDialog, currentProfile } = storeToRefs(userStore)
+const { toggleLoginDialog, toggleSettingDialog, currentProfile } = storeToRefs(userStore)
 const userProfile = userStore.userProfile
+const isAdminProfile = userStore.isAdminProfile
 const isSwitched = useDark()
 const getUsername = (): string => {
     // do some ajax
@@ -112,63 +113,17 @@ const fetchAvatar = (): string => {
     position: relative;
 }
 
-label,
-input {
-    position: absolute;
-    /*top: 20px;*/
-    right: 40px;
-}
-
-label {
-    width: 80px;
-    height: 40px;
-    display: block;
-    background-color: #222;
-    border-radius: 40px;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.4), inset 0px -1px 3px rgba(255, 255, 255, 0.4);
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-label:after {
-    content: "";
-    width: 28px;
-    height: 28px;
-    position: absolute;
-    top: 6px;
-    left: 6px;
-    background: #eee;
-    border-radius: 32px;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
-}
-
-input {
-    visibility: hidden;
-}
-
-input:checked + label {
-    background-color: #eee;
-}
-
-input:checked + label::after {
-    left: 78px;
-    transform: translateX(-100%);
-    background: #222;
-}
-
-label:active:after {
-    width: 40px;
-}
-
-input:checked + label {
-    background-color: #eee;
-}
-
 .setting {
+    display: flex;
+    align-items: center;
     height: 24px;
     padding: 0 12px;
-    font-size: 18px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.setting :hover {
+    color: var(--el-color-primary-dark-2);
 }
 
 </style>

@@ -1,6 +1,7 @@
 <template>
     <div class="common-layout">
         <LoginDialog></LoginDialog>
+        <SettingDialog></SettingDialog>
         <el-container>
             <el-header class="navbar">
                 <header-navigator></header-navigator>

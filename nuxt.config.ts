@@ -17,7 +17,7 @@ export default defineNuxtConfig({
         '@vueuse/nuxt',
     ],
 
-    css: ["element-plus/theme-chalk/dark/css-vars.css", "@/assets/css/global.css"],
+    css: ["element-plus/theme-chalk/dark/css-vars.css", "@/assets/css/global.css", "@imengyu/vue3-context-menu/lib/vue3-context-menu.css"],
 
     head: {
         title: 'My English',

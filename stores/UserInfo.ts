@@ -3,6 +3,7 @@ import { useLocalStorage } from '@vueuse/core';
 
 export const useUserStore = defineStore('useUserStore', () => {
     let toggleLoginDialog = ref(false)
+    let toggleSettingDialog = ref(false)
     let currentProfile = useLocalStorage("currentProfile", "Admin")
     let userProfile = reactive([
         {id: 0, name: "Default", avatar: "https://element-plus.org/images/element-plus-logo-small.svg", isAdmin: false},
@@ -21,6 +22,7 @@ export const useUserStore = defineStore('useUserStore', () => {
 
     return {
         toggleLoginDialog,
+        toggleSettingDialog,
         userProfile,
         currentProfile,
         isAdminProfile

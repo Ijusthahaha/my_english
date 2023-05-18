@@ -1,11 +1,39 @@
 <template>
-    <div class="root">
-        <div class="container" v-if="GKSetsChildren.length != 0">
-            <h1>{{ GKSetsChildren[currentWord].name }}</h1>
-            <h2>{{ GKSetsChildren[currentWord].definition }}</h2>
+    <ClientOnly>
+        <div
+            class="root" 
+            @mouseenter="mouseEnterEventHandler" 
+            @mouseleave="mouseLeaveEventHandler" 
+            @dblclick="dblClickEventHandler"
+        >
+            <div class="container" v-if="GKSetsChildren.length != 0">
+                <h1>{{ GKSetsChildren[currentWord].name }}</h1>
+                <h2>
+                    {{ GKSetsChildren[currentWord].part_of_speech + " " }}
+                    {{ GKSetsChildren[currentWord].definition }}
+                </h2>
+            </div>
+            <el-empty v-else description="No Data" />
+
+            <el-drawer
+                v-model="isDrawerOpen"
+                title="Add new words"
+                :before-close="handleDrawerClose"
+                size="50%"
+            >
+                <span>Hi, there!</span>
+            </el-drawer>
+
+            <el-alert
+                title="Double click to add words." 
+                type="info"
+                center
+                show-icon 
+                :closable="false" 
+                v-show="isInfoAppear"
+            />
         </div>
-        <el-empty v-else description="No Data" />
-    </div>
+    </ClientOnly>
 </template>
   
 <script lang="ts" setup>
@@ -18,11 +46,14 @@ const GKStore = useGKStore()
 const GKSets = GKStore.GKSets
 const { currentGKSet } = storeToRefs(GKStore)
 const currentWord = ref(0)
+const isInfoAppear = ref(false)
+const isDrawerOpen = ref(false)
 
 interface GK {
     id: string | number,
     name: string,
-    children: GK[]
+    part_of_speech: string,
+    definition: string,
 }
 
 let GKSetsChildren = reactive<GK[]>([])
@@ -48,16 +79,32 @@ watch(currentWord, (newValue) => {
     }
 })
 
-const keyEventHandler = (event) => {
-    if (event.key == "ArrowRight" || event.key == "ArrowDown") {
+const keyEventHandler = (event: Event) => {
+    let key = (event as KeyboardEvent).key
+    if (key == "ArrowRight" || key == "ArrowDown") {
         currentWord.value ++
-    } else if (event.key == "ArrowLeft" || event.key == "ArrowUp") {
+    } else if (key == "ArrowLeft" || key == "ArrowUp") {
         currentWord.value --
     }
 }
 
+const mouseEnterEventHandler = (event: Event) => {
+    isInfoAppear.value = true
+}
+const mouseLeaveEventHandler = (event: Event) => {
+    isInfoAppear.value = false
+}
+const dblClickEventHandler = (event: Event) => {
+    console.log(111)
+    isDrawerOpen.value = true
+}
+const handleDrawerClose = () => isDrawerOpen.value = false
+
 onMounted(() => {
     document.addEventListener('keydown', keyEventHandler)
+
+    $fetch('/api/word/hello').then(res => console.log(res))
+    .catch(err => console.log("err" + err))
 })
 </script>
   
@@ -87,5 +134,10 @@ h2 {
     color: var(--el-text-color-primary);
     font-size: x-large;
     text-align: center;
+}
+
+.el-alert {
+    position: absolute;
+    bottom: 0px;
 }
 </style>
