@@ -1,10 +1,12 @@
 import { defineStore } from "pinia";
+import { skipHydrate } from 'pinia';
 import { useLocalStorage } from '@vueuse/core';
+import { Ref } from "vue";
 
 export const useUserStore = defineStore('useUserStore', () => {
     let toggleLoginDialog: Ref<boolean> = ref(false)
     let toggleSettingDialog: Ref<boolean> = ref(false)
-    let currentProfile = useLocalStorage("currentProfile", "Admin")
+    let currentProfile: Ref<string> = useLocalStorage("currentProfile", "Admin")
     let userProfile = reactive([
         {id: 0, name: "Default", avatar: "https://element-plus.org/images/element-plus-logo-small.svg", isAdmin: false},
         {id: 1, name: "Minecraft", avatar: null, isAdmin: false},
@@ -28,7 +30,7 @@ export const useUserStore = defineStore('useUserStore', () => {
         toggleLoginDialog,
         toggleSettingDialog,
         userProfile,
-        currentProfile,
+        currentProfile: skipHydrate(currentProfile),
         userSetting,
         isAdminProfile
     }

@@ -19,7 +19,7 @@
 import { storeToRefs } from 'pinia'
 import { useGKStore } from "~/stores/GKSets"
 import { useUserStore } from "~/stores/UserInfo";
-import {ReactiveVariable} from "vue/macros";
+import { ReactiveVariable } from "vue/macros";
 
 const GKSets = useGKStore()
 const userStore = useUserStore()

@@ -32,7 +32,7 @@
       <p>'{{ currentGKSet }}' will be lost forever! (A long time!)</p>
       <template #footer>
         <span class="dialog-footer">
-          <el-button type="danger" plain @click="deleteGKSet(currentActiveItem); toggleDeleteDialog = false">
+          <el-button type="danger" plain @click="deleteGKSet(currentActiveItem.value); toggleDeleteDialog = false">
             Delete
           </el-button>
           <el-button @click="toggleDeleteDialog = false">Cancel</el-button>
@@ -40,11 +40,11 @@
       </template>
     </el-dialog>
 
-    <el-dialog v-model="togglePropertiesDialog" :title="getName(currentActiveItem) + '\'s info'" align-center>
+    <el-dialog v-model="togglePropertiesDialog" :title="getName(currentActiveItem.value) + '\'s info'" align-center>
       <el-descriptions>
-        <el-descriptions-item label="Name">{{ getName(currentActiveItem) }}</el-descriptions-item>
+        <el-descriptions-item label="Name">{{ getName(currentActiveItem.value) }}</el-descriptions-item>
         <el-descriptions-item label="Location">{{ currentProfile }}</el-descriptions-item>
-        <el-descriptions-item label="Word Count">{{ getWordCount(currentActiveItem).toString() + " " + (getWordCount(currentActiveItem) == 1 ? "word" : "words") }}</el-descriptions-item>
+        <el-descriptions-item label="Word Count">{{ getWordCount(currentActiveItem.value).toString() + " " + (getWordCount(currentActiveItem.value) == 1 ? "word" : "words") }}</el-descriptions-item>
       </el-descriptions>
     </el-dialog>
   </client-only>
@@ -84,7 +84,7 @@ const onContextMenu = (e: MouseEvent, index: number) => {
   console.log("current: " + currentActiveItem.value)
   //show your menu
   ContextMenu.showContextMenu({
-    theme: localStorage.getItem("vueuse-color-scheme") == "dark" ? "default dark" : "default",
+    theme: usePreferredDark()? "default dark" : "default",
     x: e.x,
     y: e.y,
     items: [

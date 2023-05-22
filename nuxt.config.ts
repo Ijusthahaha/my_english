@@ -7,16 +7,13 @@ export default defineNuxtConfig({
             '@pinia/nuxt', {
                 autoImports: [
                     // 自动引入 `defineStore()`
-                    'defineStore',
-                    // 自动引入 `defineStore()` 并重命名为 `definePiniaStore()`
-                    ['defineStore', 'definePiniaStore'],
+                    'defineStore'
                 ],
             }
         ],
         '@element-plus/nuxt',
         '@vueuse/nuxt'
     ],
-
     css: ["element-plus/theme-chalk/dark/css-vars.css", "@/assets/css/global.css", "@imengyu/vue3-context-menu/lib/vue3-context-menu.css"],
     app: {
         head: {

@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { skipHydrate } from 'pinia'
 import { useLocalStorage } from '@vueuse/core';
 
 export const useGKStore = defineStore('GKSets', () => {
@@ -81,7 +82,7 @@ export const useGKStore = defineStore('GKSets', () => {
 
     return {
         GKSets,
-        currentGKSet,
+        currentGKSet: skipHydrate(currentGKSet),
         updateGKSet,
         updateGKSets,
         getGKSet,
