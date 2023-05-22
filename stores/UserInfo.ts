@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { useLocalStorage } from '@vueuse/core';
-import { Ref } from "vue";
 
 export const useUserStore = defineStore('useUserStore', () => {
     let toggleLoginDialog: Ref<boolean> = ref(false)
@@ -11,6 +10,10 @@ export const useUserStore = defineStore('useUserStore', () => {
         {id: 1, name: "Minecraft", avatar: null, isAdmin: false},
         {id: 2, name: "Admin", avatar: null, isAdmin: true}
     ])
+
+    let userSetting = reactive({
+        minecraft: false
+    })
 
     function isAdminProfile (): boolean {
         for (let i=0; i<userProfile.length; i++) {
@@ -26,6 +29,7 @@ export const useUserStore = defineStore('useUserStore', () => {
         toggleSettingDialog,
         userProfile,
         currentProfile,
+        userSetting,
         isAdminProfile
     }
 })

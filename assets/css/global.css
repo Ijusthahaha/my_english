@@ -19,3 +19,8 @@ html, body, #app {
 :root {
     --header-height: 55px;
 }
+
+@font-face {
+    font-family: "Monocraft";
+    src: url("/assets/font/Monocraft.otf");
+}

@@ -1,7 +1,7 @@
 <template>
     <div class="root">
-        <h1>{{ props.error.statusCode + " " + props.error?.statusMessage }}</h1>
-        <h2 v-if="props.error.statusCode == 404">{{ msg }}</h2>
+        <h1>{{ props.error?.statusCode + " " + props.error?.statusMessage }}</h1>
+        <h2 v-if="props.error?.statusCode == 404">{{ msg }}</h2>
     </div>
 </template>
 
@@ -13,11 +13,11 @@ const props = defineProps({
     error: Object
 })
 
-console.log(props.error.statusCode + " " + props.error?.statusMessage)
+console.log(props.error?.statusCode + " " + props.error?.statusMessage)
 
 let msg = ref("")
 
-if (props.error.statusCode == 404) {
+if (props.error?.statusCode == 404) {
     if (process.client) {
         let second = 5
         const interval = setInterval(() => {
