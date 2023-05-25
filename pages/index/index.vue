@@ -95,7 +95,6 @@ const mouseLeaveEventHandler = (event: Event) => {
     isInfoAppear.value = false
 }
 const dblClickEventHandler = (event: Event) => {
-    console.log(111)
     isDrawerOpen.value = true
 }
 const handleDrawerClose = () => isDrawerOpen.value = false

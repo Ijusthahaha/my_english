@@ -3,7 +3,7 @@
         <el-container>
             <div class="user" @click="toggleLoginDialog = true">
                 <div class="avatar">
-                    <el-avatar :size="30" :src="fetchAvatar()"></el-avatar>
+                    <el-avatar :size="30" :src="displayAvatar"></el-avatar>
                 </div>
                 <div class="username">
                     <span>{{ getUsername() }}</span>
@@ -18,7 +18,7 @@
                             v-model="isSwitched"
                     />
                 </div>
-                <div class="setting" @click="toggleSettingDialog = true" v-if="isAdminProfile()">
+                <div class="setting" @click="toggleSettingDialog = true">
                     <el-icon><Setting /></el-icon>
                 </div>
             </div>
@@ -37,28 +37,38 @@ import { storeToRefs } from 'pinia'
 const userStore = useUserStore()
 const { toggleLoginDialog, toggleSettingDialog, currentProfile } = storeToRefs(userStore)
 const userProfile = userStore.userProfile
-const isAdminProfile = userStore.isAdminProfile
+const getUsername = userStore.getUsername
 const isSwitched = useDark()
-const getUsername = (): string => {
-    // do some ajax
-    return currentProfile.value
-}
+
 const fetchAvatar = (): string => {
     // do some ajax
     let avatar: Ref<string | null> = ref("")
     for (let i=0; i<userProfile.length; i++) {
-        if (userProfile[i].name == currentProfile.value) {
+        if (userProfile[i].id == currentProfile.value.toString()) {
             if (userProfile[i].avatar != null) {
                 avatar.value = userProfile[i].avatar
+                break
+            } else {
+                avatar.value = "https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
             }
         }
     }
-    if (avatar.value == "") {
-        return "https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
-    } else {
-        return avatar.value as string
-    }
+    return avatar.value as string
 }
+
+let displayAvatar = ref<string>("https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png")
+onMounted(() =>{
+    displayAvatar.value = fetchAvatar()
+    watch(() => userProfile[currentProfile.value].avatar, (newValue) => {
+        if (newValue) {
+            displayAvatar.value = newValue as string
+        }
+    })
+    watch(currentProfile, () => {
+        console.log(1)
+        displayAvatar.value = fetchAvatar()
+    })
+})
 </script>
 
 <style scoped>

@@ -1,8 +1,8 @@
 <template>
     <client-only>
         <el-dialog v-model="toggleLoginDialog" title="Login" append-to-body align-center :before-close="onDialogClose">
-            <el-form :inline="true" :model="form" class="demo-form-inline">
-                <el-form-item label="Login profile: " prop="profile" required>
+            <el-form :inline="true" :model="form">
+                <el-form-item label="Login profile: " required>
                     <el-select v-model="form.profile as string" placeholder="Select Profile">
                         <el-option v-for="profile in userProfile" :key="profile.id" :label="profile.name" :value="profile.name" />
                     </el-select>
@@ -25,6 +25,9 @@ const GKSets = useGKStore()
 const userStore = useUserStore()
 let { toggleLoginDialog, currentProfile } = storeToRefs(userStore)
 let userProfile = userStore.userProfile
+let getUsername = userStore.getUsername
+let updateUsername = userStore.updateUsername
+let updateCurrentProfile = userStore.updateCurrentProfile
 const onDialogClose = (done: () => void) => {
     toggleLoginDialog.value = false
     done()
@@ -35,13 +38,10 @@ let form: ReactiveVariable<{ profile: string }> = reactive({
 })
 const onSubmit = () => {
   // do some ajax
-  if (form.profile && form.profile != currentProfile.value) {
-    currentProfile.value = form.profile
+  if (form.profile && form.profile != getUsername()) {
+    updateCurrentProfile(form.profile)
   }
   toggleLoginDialog.value = false
-
-  // update GKSets
-  GKSets.updateGKSets()
 }
 </script>
 

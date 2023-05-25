@@ -3,16 +3,9 @@ import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
     modules: [
-        [
-            '@pinia/nuxt', {
-                autoImports: [
-                    // 自动引入 `defineStore()`
-                    'defineStore'
-                ],
-            }
-        ],
+        '@pinia/nuxt',
         '@element-plus/nuxt',
-        '@vueuse/nuxt'
+        '@vueuse/nuxt',
     ],
     css: ["element-plus/theme-chalk/dark/css-vars.css", "@/assets/css/global.css", "@imengyu/vue3-context-menu/lib/vue3-context-menu.css"],
     app: {

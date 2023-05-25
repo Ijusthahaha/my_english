@@ -4,34 +4,21 @@ import { useLocalStorage } from '@vueuse/core';
 
 export const useGKStore = defineStore('GKSets', () => {
     const currentGKSet = useLocalStorage("currentGKSet", 0)
-    const updateGKSet = (i: number) => {
-        currentGKSet.value = i
-    }
-    const getGKSet = (i: number): string => {
-        return GKSets[i].name
-    }
-    const deleteGKSet = (i: number) => {
-        GKSets.splice(i, 1)
-    }
-    const getWordCount = (i: number): number => {
-        if (!GKSets[i].children) return 0
-        return GKSets[i]!.children!.length;
-    }
 
     interface GKParagraph {
-        id: string | number,
+        id: string,
         name: string,
         children?: GK[]
     }
     interface GK {
-        id: string | number,
+        id: string,
         name: string,
         part_of_speech: string,
         definition: string,
     }
 
     // 每个Profile有每个不同的GKSets
-    const GKSets: GKParagraph[] = [
+    const GKSets = ref<GKParagraph[]>([
         {
             id: "1", name: "GK Paragraph 1", children: [
                 {
@@ -74,19 +61,44 @@ export const useGKStore = defineStore('GKSets', () => {
             },]
         },
         { id: "5", name: "GK Paragraph 5" }
-    ]
+    ])
 
-    function updateGKSets() {
-        console.log("updating...")
+    const updateGKSet = (i: number) => {
+        currentGKSet.value = i
+    }
+    const getGKSet = (i: number): string => {
+        return GKSets.value[i].name
+    }
+    const deleteGKSet = (i: number) => {
+        GKSets.value.splice(i, 1)
+    }
+    const getWordCount = (i: number): number => {
+        if (!GKSets.value[i].children) return 0
+        return GKSets.value[i]!.children!.length;
+    }
+    const renameGKSet = (i: number, name: string) => {
+        GKSets.value[i].name = name
+    }
+    const moveGKSet = (i: number, profile: string) => {
+        // TODO: complete this function
+    }
+    const addGKSet = (gk: string) => {
+        GKSets.value.push({
+            id: (parseInt(GKSets.value.at(-1)?.id as string) + 1).toString(),
+            name: gk,
+            children: []
+        })
     }
 
     return {
         GKSets,
         currentGKSet: skipHydrate(currentGKSet),
         updateGKSet,
-        updateGKSets,
         getGKSet,
+        moveGKSet,
         deleteGKSet,
-        getWordCount
+        renameGKSet,
+        getWordCount,
+        addGKSet
     }
 })
