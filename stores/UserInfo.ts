@@ -7,6 +7,7 @@ export const useUserStore = defineStore('useUserStore', () => {
     let toggleLoginDialog: Ref<boolean> = ref(false)
     let toggleSettingDialog: Ref<boolean> = ref(false)
     let currentProfile: Ref<number> = useLocalStorage("currentProfile", 0)
+    let minecraftMode: Ref<boolean> = ref(false)
 
     interface Profile {
         id: string,
@@ -101,6 +102,8 @@ export const useUserStore = defineStore('useUserStore', () => {
         getUsername,
         getUsernameById,
         updateCurrentProfile,
-        updateAvatar
+        updateAvatar,
+        newProfile,
+        minecraftMode
     }
 })

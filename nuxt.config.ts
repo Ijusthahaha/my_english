@@ -7,6 +7,7 @@ export default defineNuxtConfig({
         '@element-plus/nuxt',
         '@vueuse/nuxt',
     ],
+    //@ts-ignore
     css: ["element-plus/theme-chalk/dark/css-vars.css", "@/assets/css/global.css", "@imengyu/vue3-context-menu/lib/vue3-context-menu.css"],
     app: {
         head: {
@@ -15,7 +16,7 @@ export default defineNuxtConfig({
                 { charset: 'utf-8' },
                 { name: 'viewport', content: 'width=device-width, initial-scale=1' },
                 { name: 'keywords', content: 'English' },
-                { hid: 'description', name: 'description', content: 'This is my English website.' }
+                { key: 'description', name: 'description', content: 'This is my English website.' }
             ],
             link: [
                 { rel: 'icon', href: 'book.svg' }

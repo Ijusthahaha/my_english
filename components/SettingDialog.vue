@@ -19,16 +19,15 @@
           </el-upload>
         </el-form-item>
 
-        <!-- <el-form-item label="Profile picture: ">
-                    
-                </el-form-item> -->
+        <el-divider />
 
-        <!-- <el-form-item label="Profile name: ">
-                    <el-input v-model="form.name" placeholder="Profile name" />
-                </el-form-item>
-                <el-form-item label="Profile name: " required>
-                    <el-input v-model="form.name" placeholder="Profile name" />
-                </el-form-item> -->
+        <el-form-item label="Create new profile: " :v-if="isAdmin">
+          <el-input v-model="form.name" placeholder="Profile name" />
+        </el-form-item>
+
+        <el-form-item label="Minecraft mode: " :v-if="isAdmin">
+          <el-switch v-model="minecraftMode" />
+        </el-form-item>
 
       </el-form>
 
@@ -39,20 +38,22 @@
 </template>
 
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
-import { useGKStore } from "~/stores/GKSets"
-import { useUserStore } from "~/stores/UserInfo";
-import type { UploadUserFile, UploadFile, UploadFiles } from 'element-plus'
+import {storeToRefs} from 'pinia'
+import {useGKStore} from "~/stores/GKSets"
+import {useUserStore} from "~/stores/UserInfo";
+import type {UploadFile, UploadFiles, UploadUserFile} from 'element-plus'
+import {ReactiveVariable} from "vue/macros";
 
 const GKSets = useGKStore()
 const userStore = useUserStore()
-let { toggleSettingDialog, currentProfile } = storeToRefs(userStore)
+let { toggleSettingDialog, currentProfile, minecraftMode } = storeToRefs(userStore)
 let userProfile = userStore.userProfile
 let getUsername = userStore.getUsername
 let updateUsername = userStore.updateUsername
 let updateAvatar = userStore.updateAvatar
+let isAdmin = userStore.isAdminProfile
 
-let form = reactive({
+let form: ReactiveVariable<{ name: string }> = reactive({
   name: '',
 })
 
@@ -80,9 +81,7 @@ let displayAvatar = ref<string>(fetchAvatar())
 
 let fileList: UploadUserFile[] = []
 const updateFileList = (file: UploadFile, _fileList: UploadFiles) => {
-  const url = URL.createObjectURL(file.raw as File)
-  displayAvatar.value = url
-
+  displayAvatar.value = URL.createObjectURL(file.raw as File)
   fileList[0] = file
 }
 
@@ -105,6 +104,16 @@ const submitForm = () => {
   }
 }
 
+onMounted(() =>{
+  watch(() => userProfile[currentProfile.value].avatar, (newValue) => {
+    if (newValue) {
+      displayAvatar.value = newValue as string
+    }
+  })
+  watch(currentProfile, () => {
+    displayAvatar.value = fetchAvatar()
+  })
+})
 </script>
 
 <style scoped>

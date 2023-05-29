@@ -88,19 +88,20 @@ import { MessageBox, Setting } from '@element-plus/icons-vue'
 import { useGKStore } from "~/stores/GKSets";
 import { useUserStore } from "~/stores/UserInfo"
 import ContextMenu from '@imengyu/vue3-context-menu'
+import {ReactiveVariable} from "vue/macros";
 
 const toggleMoveDialog = ref(false)
 const toggleDeleteDialog = ref(false)
 const togglePropertiesDialog = ref(false)
 const toggleRenameDialog = ref(false)
 const toggleAddGKDialog = ref(false)
-const paragraphForm = reactive({
+const paragraphForm: ReactiveVariable<{ gk: string }> = reactive({
   gk: ""
 })
-const moveForm = reactive({
+const moveForm: ReactiveVariable<{ profile: string }> = reactive({
   profile: ""
 })
-const renameForm = reactive({
+const renameForm: ReactiveVariable<{ name: string }> = reactive({
   name: ""
 })
 

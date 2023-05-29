@@ -65,7 +65,6 @@ onMounted(() =>{
         }
     })
     watch(currentProfile, () => {
-        console.log(1)
         displayAvatar.value = fetchAvatar()
     })
 })

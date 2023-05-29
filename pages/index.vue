@@ -36,7 +36,6 @@
     position: sticky;
     top: 0;
     left: 0;
-    z-index: var(--nav-z-index);
     height: 100%;
 }
 </style>
