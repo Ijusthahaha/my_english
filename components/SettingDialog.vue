@@ -19,14 +19,14 @@
           </el-upload>
         </el-form-item>
 
-        <el-divider />
+        <el-divider v-if="isAdmin()" />
 
-        <el-form-item label="Create new profile: " :v-if="isAdmin">
-          <el-input v-model="form.name" placeholder="Profile name" />
+        <el-form-item label="Create new profile: " v-if="isAdmin()">
+          <el-input v-model="form.newProfile" placeholder="Profile name" />
         </el-form-item>
 
-        <el-form-item label="Minecraft mode: " :v-if="isAdmin">
-          <el-switch v-model="minecraftMode" />
+        <el-form-item label="Minecraft mode: " v-if="isAdmin()">
+          <el-switch v-model="form.minecraftMode" />
         </el-form-item>
 
       </el-form>
@@ -43,6 +43,7 @@ import {useGKStore} from "~/stores/GKSets"
 import {useUserStore} from "~/stores/UserInfo";
 import type {UploadFile, UploadFiles, UploadUserFile} from 'element-plus'
 import {ReactiveVariable} from "vue/macros";
+import {Ref} from "vue";
 
 const GKSets = useGKStore()
 const userStore = useUserStore()
@@ -52,14 +53,17 @@ let getUsername = userStore.getUsername
 let updateUsername = userStore.updateUsername
 let updateAvatar = userStore.updateAvatar
 let isAdmin = userStore.isAdminProfile
+let newProfile = userStore.newProfile
 
-let form: ReactiveVariable<{ name: string }> = reactive({
+let form: ReactiveVariable<{ name: string, newProfile: string, minecraftMode: boolean }> = reactive({
   name: '',
+  newProfile: '',
+  minecraftMode: minecraftMode.value
 })
 
 const onDialogClose = (done: () => void) => {
-  toggleSettingDialog.value = false
-  done()
+    toggleSettingDialog.value = false
+    done()
 }
 const fetchAvatar = (): string => {
     // do some ajax
@@ -101,6 +105,21 @@ const submitForm = () => {
     // axios.post("", params).then()
     
     updateAvatar(currentProfile.value.toString(), fileList[0].raw as File)
+  }
+
+  if (isAdmin()) {
+    if (form.newProfile) {
+      for (let i=0; i<userProfile.length; i++) {
+        if (userProfile[i].name == form.newProfile) {
+          ElMessage.error("Already have profile: " + form.newProfile)
+          return
+        }
+      }
+      newProfile(form.newProfile)
+    }
+    if (form.minecraftMode != minecraftMode.value) {
+      minecraftMode.value = form.minecraftMode
+    }
   }
 }
 
